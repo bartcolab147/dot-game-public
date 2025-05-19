@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Playing: {{ board_name }}
+{% endblock title %}
+{% block content %}
+    <style>
+    #dotBoardContainer { touch-action: none; }
+    .game-point { pointer-events: auto; cursor: pointer; }
+    #interaction-svg { cursor: default; }
+    .legend-color-swatch { display: inline-block; width: 1em; height: 1em; margin-right: 0.5em; border: 1px solid #ccc; border-radius: 50%; vertical-align: middle; }
+
+    /* Modified unsaved-indicator style: now primarily for animation */
+    .unsaved-indicator {
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    /* Style for disabled buttons */
+    button[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed !important; /* Ensure override of Tailwind's cursor-pointer */
+    }
+    </style>
+    <div class="container mx-auto p-4">
+        <div id="game-status"
+             class="mb-4 p-3 text-center rounded transition-all duration-300 ease-in-out"></div>
+        <div class="flex flex-row gap-4">
+            <div class="flex-grow flex justify-center items-center">
+                <div id="dotBoardContainer"
+                     class="relative shadow-lg"
+                     style="width: min-content;
+                            height: min-content;
+                            background-color: #fff">
+                    <div id="board-grid"
+                         class="grid-background"
+                         style="display: grid;
+                                border: 1px solid #ccc;
+                                position: absolute;
+                                top:0;
+                                left:0;
+                                z-index: 1"></div>
+                    <svg id="paths-svg"
+                         class="absolute top-0 left-0 z-20"
+                         style="pointer-events: none">
+                    </svg>
+                    <svg id="overlay-svg"
+                         class="absolute top-0 left-0 z-30"
+                         style="pointer-events: none">
+                    </svg>
+                    <svg id="interaction-svg" class="absolute top-0 left-0 z-40">
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center items-center space-y-6">
+                <!-- Save Progress Button -->
+                <div class="relative group">
+                    <!-- User will provide SVG for Save -->
+                    {% include "gallery/view_route/save_button.html" %}
+                    <!-- Unsaved changes indicator -->
+                    <span id="unsaved-changes-indicator"
+                          class="unsaved-indicator absolute top-1 right-1 w-3 h-3 bg-orange-500 rounded-full border-2 border-white"
+                          title="Unsaved changes"
+                          style="display: none"></span>
+                    <div class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-200 bg-white text-black text-center p-2 rounded-md shadow-lg z-50 whitespace-nowrap">
+                        Save Progress
+                    </div>
+                </div>
+                <!-- Check Solution Button -->
+                <div class="relative group">
+                    <button type="button"
+                            id="check-solution-button"
+                            class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-green-700 transition duration-200">
+                        <!-- User will provide SVG for Check -->
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            </g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                            </g>
+                            <g id="SVGRepo_iconCarrier">
+                            <path d="M12 19V18.99M8.12598 8C8.57002 6.27477 10.1361 5 12 5C12.7285 5 13.4116 5.1948 14 5.53515M12 16C12 11.5 16 12.5 16 9C16 8.6547 15.9562 8.31962 15.874 8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-200 bg-white text-black text-center p-2 rounded-md shadow-lg z-50 whitespace-nowrap">
+                        Check Solution
+                    </div>
+                </div>
+                <!-- Reset All Paths Button -->
+                <div class="relative group">
+                    <button type="button"
+                            id="reset-all-paths-button"
+                            class="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-red-700 transition duration-200">
+                        <!-- User will provide SVG for Reset -->
+                        <svg fill="#ffffff"
+                             width="32px"
+                             height="32px"
+                             viewBox="0 0 1920 1920"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            </g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                            </g>
+                            <g id="SVGRepo_iconCarrier">
+                            <path d="M960 0v112.941c467.125 0 847.059 379.934 847.059 847.059 0 467.125-379.934 847.059-847.059 847.059-467.125 0-847.059-379.934-847.059-847.059 0-267.106 126.607-515.915 338.824-675.727v393.374h112.94V112.941H0v112.941h342.89C127.058 407.38 0 674.711 0 960c0 529.355 430.645 960 960 960s960-430.645 960-960S1489.355 0 960 0" fill-rule="evenodd">
+                            </path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition duration-200 bg-white text-black text-center p-2 rounded-md shadow-lg z-50 whitespace-nowrap">
+                        Reset All Paths
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="game-initial-data"
+         data-board-id="{{ board_id }}"
+         data-csrf-token="{{ csrf_token }}"
+         style="display: none"></div>
+    <script src="{% static 'gallery/js/dist/board_renderer.js' %}"
+            type="module"
+            defer></script>
+    <script src="{% static 'gallery/js/dist/play_game.js' %}" type="module" defer></script>
+{% endblock content %}

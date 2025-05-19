@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}
+    About the Interactive Route Editor
+{% endblock title %}
+{% block content %}
+    <div class="container mx-auto px-4 py-6">
+        <!-- Title of the page -->
+        <h1 class="text-3xl font-bold mb-6 text-center">Interactive Route Editor</h1>
+        <!-- Section with the description of the app -->
+        <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-semibold mb-4">What is this Application?</h2>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                This application is designed to help users create, edit, and visualize routes on background images, such as maps or floor plans.
+                It allows you to define a route by clicking on the image to place points, connecting them with lines, and giving you full control over the editing process.
+                Whether you're planning a trip or designing a floor layout, this tool is an easy-to-use interactive editor for your needs.
+            </p>
+            <h3 class="text-xl font-semibold mb-2">Key Features:</h3>
+            <ul class="list-disc pl-6 text-lg text-gray-700 mb-4">
+                <li>Interactive route creation on a background image (e.g., map or floor plan).</li>
+                <li>Ability to add, delete, and manage points on the route.</li>
+                <li>View the route as a series of points connected by lines.</li>
+                <li>Save and edit routes associated with a background image.</li>
+            </ul>
+            <h3 class="text-xl font-semibold mb-2">How Does It Work?</h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                Once you log in, you can select a background image (e.g., a map of the United States) and start creating a route.
+                The route is made up of ordered points defined by (x, y) coordinates on the image.
+                You can visualize the route directly on the image as a connected line between the points. It's possible to add new points or remove existing ones, as well as adjust the route's layout by modifying point coordinates.
+            </p>
+            <h3 class="text-xl font-semibold mb-2">Interactive Editing</h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                The editing process is simple and intuitive. You can click on the image to add points, view their coordinates, and delete or modify them using the options available in the sidebar. The changes will be saved in your account, so you can come back later to update the route or explore different possibilities.
+            </p>
+            <div class="text-center mt-6">
+                <a href="{% url 'gallery:route_list' %}"
+                   class="inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+                    Start Editing Your Routes
+                </a>
+            </div>
+        </section>
+    </div>
+{% endblock content %}

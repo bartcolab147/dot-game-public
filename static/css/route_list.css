@@ -1,0 +1,57 @@
+.selected-background {
+  outline: 3px solid #4caf50; /* Green outline for selected */
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+}
+.bg-image-thumbnail {
+  width: 100%;
+  height: 70px; /* Adjust as needed */
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.25rem; /* Tailwind: rounded */
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.bg-image-thumbnail:hover {
+  transform: scale(1.05);
+}
+.board-card-delete-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 1.75rem; /* w-7 */
+  height: 1.75rem; /* h-7 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444; /* red-500 */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.board-card-delete-btn:hover {
+  background-color: #ef4444; /* red-500 */
+  color: white;
+}
+
+/* Styles for Carousel */
+.carousel-container-wrapper {
+  position: relative; /* For potential future prev/next buttons */
+}
+.carousel-inner-container {
+  display: flex;
+  overflow-x: auto; /* Make sure this is auto or scroll */
+  scroll-behavior: smooth;
+  padding-bottom: 1rem; /* Space for scrollbar that doesn't overlap content */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.board-card-carousel-item {
+  flex: 0 0 auto; /* Prevents shrinking/growing */
+  width: 16rem; /* w-64. Adjust as needed */
+  /* height: 15rem; h-60. height defined on the card itself. */
+  margin-right: 1rem; /* space-x-4 equivalent */
+}
+.board-card-carousel-item:last-child {
+  margin-right: 0;
+}

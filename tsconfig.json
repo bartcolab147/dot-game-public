@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "esnext",
+    "strict": true,
+    "outDir": "./gallery/static/gallery/js/dist",
+    "rootDir": "./gallery/ts",
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "include": ["gallery/ts/**/*"],
+  "exclude": ["node_modules"]
+}

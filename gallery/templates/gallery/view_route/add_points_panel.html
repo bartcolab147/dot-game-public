@@ -1,0 +1,56 @@
+<div id="form-panel">
+  <div id="automatic-pair-panel"
+       class="space-y-4 bg-white p-6 rounded-lg shadow-md mb-6">
+    <h3 class="text-2xl font-semibold mb-4 text-center">Automatic Pair Adding</h3>
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2">
+        <label for="pair-color" class="text-sm font-medium text-gray-700">Color</label>
+        <input type="color"
+               id="pair-color"
+               class="w-12 h-12 p-0 border-none rounded-full bg-transparent">
+      </div>
+      <span class="text-sm font-medium text-gray-700">Select the color and click two unoccupied cells to place new points.</span>
+    </div>
+    <p id="pair-selection-status" class="text-gray-500 text-sm mt-2">Please select a color first.</p>
+  </div>
+  <h3 class="text-2xl font-semibold mb-4 text-center">Add a Point</h3>
+  <div class="space-y-4 bg-white p-6 rounded-lg shadow-md">
+    <form method="post">
+      {% csrf_token %}
+      <!-- Row Layout for Color and Coordinates -->
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2">
+          <label for="{{ form.color.id_for_label }}"
+                 class="text-sm font-medium text-gray-700">Color</label>
+          <input type="color"
+                 name="color"
+                 id="{{ form.color.id_for_label }}"
+                 class="w-12 h-12 p-0 border-none rounded-full bg-transparent" />
+        </div>
+        <span class="text-sm font-medium text-gray-700">Coordinates:</span>
+        <!-- X Coordinate Field -->
+        <input type="number"
+               id="{{ form.x.id_for_label }}"
+               name="x"
+               min="0"
+               max="99"
+               placeholder="X"
+               class="w-16 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <!-- Y Coordinate Field -->
+        <input type="number"
+               id="{{ form.y.id_for_label }}"
+               name="y"
+               min="0"
+               max="99"
+               placeholder="Y"
+               class="w-16 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+      <!-- Submit Button -->
+      <button type="submit"
+              name="add_point"
+              class="w-full bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all mt-4">
+        Add Point
+      </button>
+    </form>
+  </div>
+</div>
